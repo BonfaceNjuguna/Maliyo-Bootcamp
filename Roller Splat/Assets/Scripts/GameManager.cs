@@ -7,10 +7,13 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager singleton;
 
+    public ParticleSystem confettiParticle;
+
     private GroundPieceController[] allGroundPieces;
     // Start is called before the first frame update
     void Start()
     {
+        confettiParticle.Stop();
         SetupNewLevel();
     }
 
@@ -37,6 +40,7 @@ public class GameManager : MonoBehaviour
     private void OnLevelFinishedLoading(Scene scene, LoadSceneMode mode)
     {
         SetupNewLevel();
+        confettiParticle.Stop();
     }
 
     public void CheckComplete()
@@ -53,7 +57,16 @@ public class GameManager : MonoBehaviour
         }
 
         if (isFinished)
-            NextLevel();
+        {
+            confettiParticle.Play();
+            StartCoroutine(PlayConfettiBeforeNextLevel());
+        }
+    }
+
+    IEnumerator PlayConfettiBeforeNextLevel()
+    {
+        yield return new WaitForSeconds(4);
+        NextLevel();
     }
 
     private void NextLevel()
