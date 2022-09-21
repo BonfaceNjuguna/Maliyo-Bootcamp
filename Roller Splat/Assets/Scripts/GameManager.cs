@@ -9,11 +9,15 @@ public class GameManager : MonoBehaviour
 
     public ParticleSystem confettiParticle;
 
+    private AudioSource confettiAudio;
+    public AudioClip confettiSound;
+
     private GroundPieceController[] allGroundPieces;
     // Start is called before the first frame update
     void Start()
     {
         confettiParticle.Stop();
+        confettiAudio = GetComponent<AudioSource>();
         SetupNewLevel();
     }
 
@@ -59,6 +63,7 @@ public class GameManager : MonoBehaviour
         if (isFinished)
         {
             confettiParticle.Play();
+            confettiAudio.PlayOneShot(confettiSound, 1.0f);
             StartCoroutine(PlayConfettiBeforeNextLevel());
         }
     }
@@ -71,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     private void NextLevel()
     {
-        if (SceneManager.GetActiveScene().buildIndex == 1)
+        if (SceneManager.GetActiveScene().buildIndex == 7)
         {
             SceneManager.LoadScene(0);
         }

@@ -24,6 +24,7 @@ public class BallController : MonoBehaviour
     private AudioSource playerAudio;
     public AudioClip swipeSound;
 
+
     private void Start()
     {
         solveColor = Random.ColorHSV(.5f, 1);
